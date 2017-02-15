@@ -26,6 +26,8 @@ bower install git://github.com/Brightspace/image-selector.git#v0.0.1
 `tenant-id` is the tenant ID of the Brightspace instance
 `telemetry-endpoint` is the URL of the telemetry service that events are being sent to
 
+For more examples, see its use in the [My Courses](https://github.com/Brightspace/d2l-my-courses-ui/blob/master/d2l-my-courses.html#L134) widget.
+
 ## Running tests locally in Windows
 
 Tests in this repo use web-component-tester (WCT). Currently WCT has an issue in Windows with tests taking about a minute to start.  A workaround is to set two environment variables for Launchpad (a library used by WCT).  These help bypass browser searching which is what causes the delay.  For example:
