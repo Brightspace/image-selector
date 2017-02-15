@@ -1,0 +1,20 @@
+{
+  "name": "d2l-image-selector",
+  "description": "Polymer-based web component for a D2L image selector",
+  "private": true,
+  "scripts": {
+    "test": "npm run test:lint:js && npm run test:lint:wc && wct",
+    "test:lint:js": "eslint --ext .js,.html .",
+    "test:lint:wc": "polylint --no-recursion --input *.html",
+    "test:no-lint": "wct -p"
+  },
+  "author": "D2L Corporation",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "eslint": "^3.14.0",
+    "eslint-config-brightspace": "^0.2.4",
+    "eslint-plugin-html": "^1.7.0",
+    "polylint": "^2.10.1",
+    "web-component-tester": "^5.0.0"
+  }
+}
