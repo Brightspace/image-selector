@@ -33,7 +33,7 @@
     "d2l-icons": "^3.0.0",
     "d2l-loading-spinner": "^5.0.2",
     "d2l-organization-hm-behavior": "git://github.com/Brightspace/organization-hm-behavior.git#~0.0.1",
-    "d2l-search-widget": "git://github.com/Brightspace/d2l-search-widget-ui.git#~0.4.2",
+    "d2l-search-widget": "git://github.com/Brightspace/d2l-search-widget-ui.git#~0.7.2",
     "d2l-typography": "~5.2.3"
   }
 }
