@@ -8,7 +8,7 @@ For further information on this and other D2L UI components, see the docs at [ui
 
 `d2l-image-selector` can be installed from Bower:
 ```shell
-bower install git://github.com/Brightspace/image-selector.git#v0.0.1
+bower install git://github.com/Brightspace/image-selector.git#v1.0.0
 ```
 ## Usage
 ```html
