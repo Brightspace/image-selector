@@ -127,6 +127,7 @@
 			size="100">
 		</d2l-loading-spinner>
 	</template>
+	<script src="https://s.brightspace.com/lib/siren-parser/6.0.0/siren-parser.js"></script>
 	<script>
 		'use strict';
 
@@ -176,7 +177,6 @@
 					'_searchResultsChanged'
 				);
 			},
-			_sirenParser: document.createElement('d2l-siren-parser'),
 			_searchImages: [],
 			_defaultImages: [],
 			_searchResultsChanged: function(response) {
@@ -227,13 +227,16 @@
 				this._showGrid = true;
 				this._nextSearchResultPage = null;
 			},
+			_parseEntity: function(entity) {
+				return window.D2L.Hypermedia.Siren.Parse(entity);
+			},
 			_onImagesRequestResponse: function(response, loadMore, isDefault) {
 				this._loadingSpinnerClass = 'd2l-basic-image-selector-hidden';
 				if (response.detail.status !== 200) {
 					return;
 				}
 
-				var parsedResponse = this._sirenParser.parse(response.detail.xhr.response);
+				var parsedResponse = this._parseEntity(response.detail.xhr.response);
 				var newImages;
 
 				if (loadMore) {

@@ -126,7 +126,7 @@ describe('<d2l-course-tile>', function() {
 
 	describe('_initialize', function() {
 		beforeEach(function() {
-			widget._sirenParser.parse = sinon.stub().returns({});
+			widget._parseEntity = sinon.stub().returns({});
 			widget.imageCatalogLocation = 'http://test.com';
 			widget._getChangeCourseImageLink = sinon.stub();
 			widget.$.imagesRequest.generateRequest = sinon.stub();
@@ -171,7 +171,7 @@ describe('<d2l-course-tile>', function() {
 				}
 			};
 
-			widget._sirenParser.parse = sinon.stub().returns({
+			widget._parseEntity = sinon.stub().returns({
 				entities: [4, 5, 6]
 			});
 			widget._setNextPage = sinon.stub();
