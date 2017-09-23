@@ -97,19 +97,11 @@
 				cache-responses>
 			</d2l-search-widget>
 
-			<template is="dom-if" if="{{!_showUploadAsLink()}}" restamp="true">
-				<div role="button" tabindex="0" class="upload" on-tap="_handleUpload" on-keydown="_handleUpload">
-					<d2l-icon class="upload-icon" icon="d2l-tier2:upload" aria-hidden="true"></d2l-icon>
-					<span class="upload-text">{{localize('upload')}}</span>
-				</div>
-			</template>
-
-			<template is="dom-if" if="{{_showUploadAsLink()}}" restamp="true">
-				<a class="upload" href$=[[_organizationChangeImageHref]] on-tap="_uploadTelemetry" on-keydown="_uploadTelemetry">
-					<d2l-icon class="upload-icon" icon="d2l-tier2:upload" aria-hidden="true"></d2l-icon>
-					<span class="upload-text">{{localize('upload')}}</span>
-				</a>
-			</template>
+			<div role="button" tabindex="0" class="upload" on-tap="_handleUpload" on-keydown="_handleUpload">
+				<d2l-icon class="upload-icon" icon="d2l-tier2:upload" aria-hidden="true"></d2l-icon>
+				<span class="upload-text">{{localize('upload')}}</span>
+			</div>
+			
 		</div>
 
 		<template is="dom-if" if="{{_showGrid}}">
@@ -232,9 +224,6 @@
 				}
 
 				this.fire('clear-image-scroll-threshold');
-			},
-			_showUploadAsLink: function() {
-				return !this.courseImageUploadCb;
 			},
 			_displayDefaultResults: function() {
 				this._searchImages = [];
@@ -416,7 +405,11 @@
 			_handleUpload: function(e) {
 				if ((e.type === 'keydown' && e.keyCode === 13) || (e.type === 'tap')) {
 					this._uploadTelemetry(e);
-					this.courseImageUploadCb();
+					if (this.courseImageUploadCb) {
+						this.courseImageUploadCb();
+					} else {
+						window.location.href = this._organizationChangeImageHref;
+					}
 				}
 			}
 		});
