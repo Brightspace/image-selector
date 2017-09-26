@@ -97,10 +97,12 @@
 				cache-responses>
 			</d2l-search-widget>
 
-			<div role="button" tabindex="0" class="upload" on-tap="_handleUpload" on-keydown="_handleUpload">
-				<d2l-icon class="upload-icon" icon="d2l-tier2:upload" aria-hidden="true"></d2l-icon>
-				<span class="upload-text">{{localize('upload')}}</span>
-			</div>
+			<template is="dom-if" if="{{_organizationChangeImageHref}}" restamp="true">
+				<div role="button" tabindex="0" class="upload" on-tap="_handleUpload" on-keydown="_handleUpload">
+					<d2l-icon class="upload-icon" icon="d2l-tier2:upload" aria-hidden="true"></d2l-icon>
+					<span class="upload-text">{{localize('upload')}}</span>
+				</div>
+			</template>
 
 		</div>
 
