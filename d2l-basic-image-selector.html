@@ -101,7 +101,7 @@
 				<d2l-icon class="upload-icon" icon="d2l-tier2:upload" aria-hidden="true"></d2l-icon>
 				<span class="upload-text">{{localize('upload')}}</span>
 			</div>
-			
+
 		</div>
 
 		<template is="dom-if" if="{{_showGrid}}">
@@ -347,16 +347,14 @@
 			_onDefaultImagesRequestResponse: function(response) {
 				this._onImagesRequestResponse(response, false, true);
 			},
-			_uploadTelemetry: function(e) {
-				if ((e.type === 'keydown' && e.keyCode === 13) || (e.type === 'tap')) {
-					this._telemetryEvent = JSON.stringify({
-						ts: Math.round(Date.now() / 1000),
-						name: 'CourseImageUpload',
-						userId: this.userId,
-						tenantId: this.tenantId
-					});
-					this.$.telemetryRequest.generateRequest();
-				}
+			_uploadTelemetry: function() {
+				this._telemetryEvent = JSON.stringify({
+					ts: Math.round(Date.now() / 1000),
+					name: 'CourseImageUpload',
+					userId: this.userId,
+					tenantId: this.tenantId
+				});
+				this.$.telemetryRequest.generateRequest();
 			},
 			_doTelemetryNextPageRequest: function(parsedResponse) {
 				var searchRegex = /search=([^&]*)/,
@@ -404,7 +402,7 @@
 			},
 			_handleUpload: function(e) {
 				if ((e.type === 'keydown' && e.keyCode === 13) || (e.type === 'tap')) {
-					this._uploadTelemetry(e);
+					this._uploadTelemetry();
 					if (this.courseImageUploadCb) {
 						this.courseImageUploadCb();
 					} else {
