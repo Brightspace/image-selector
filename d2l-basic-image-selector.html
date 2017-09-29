@@ -31,6 +31,10 @@
 				margin-bottom: 45px;
 			}
 
+			div.upload {
+				cursor: pointer;
+			}
+
 			.upload-text {
 				margin-left: 5px;
 			}
@@ -94,11 +98,12 @@
 			</d2l-search-widget>
 
 			<template is="dom-if" if="{{_organizationChangeImageHref}}" restamp="true">
-				<a class="upload" href$=[[_organizationChangeImageHref]] on-tap="_uploadTelemetry" on-keydown="_uploadTelemetry">
+				<div role="button" tabindex="0" class="upload" on-tap="_handleUpload" on-keydown="_handleUpload">
 					<d2l-icon class="upload-icon" icon="d2l-tier2:upload" aria-hidden="true"></d2l-icon>
 					<span class="upload-text">{{localize('upload')}}</span>
-				</a>
+				</div>
 			</template>
+
 		</div>
 
 		<template is="dom-if" if="{{_showGrid}}">
@@ -136,6 +141,7 @@
 				this._images = this._defaultImages;
 			},
 			properties: {
+				courseImageUploadCb: Function,
 				imageCatalogLocation: String,
 				organization: Object,
 				userId: String,
@@ -343,16 +349,14 @@
 			_onDefaultImagesRequestResponse: function(response) {
 				this._onImagesRequestResponse(response, false, true);
 			},
-			_uploadTelemetry: function(e) {
-				if ((e.type === 'keydown' && e.keyCode === 13) || (e.type === 'tap')) {
-					this._telemetryEvent = JSON.stringify({
-						ts: Math.round(Date.now() / 1000),
-						name: 'CourseImageUpload',
-						userId: this.userId,
-						tenantId: this.tenantId
-					});
-					this.$.telemetryRequest.generateRequest();
-				}
+			_uploadTelemetry: function() {
+				this._telemetryEvent = JSON.stringify({
+					ts: Math.round(Date.now() / 1000),
+					name: 'CourseImageUpload',
+					userId: this.userId,
+					tenantId: this.tenantId
+				});
+				this.$.telemetryRequest.generateRequest();
 			},
 			_doTelemetryNextPageRequest: function(parsedResponse) {
 				var searchRegex = /search=([^&]*)/,
@@ -397,6 +401,16 @@
 					tenantId: this.tenantId
 				});
 				this.$.telemetryRequest.generateRequest();
+			},
+			_handleUpload: function(e) {
+				if ((e.type === 'keydown' && e.keyCode === 13) || (e.type === 'tap')) {
+					this._uploadTelemetry();
+					if (this.courseImageUploadCb) {
+						this.courseImageUploadCb();
+					} else {
+						window.location.href = this._organizationChangeImageHref;
+					}
+				}
 			}
 		});
 	</script>
