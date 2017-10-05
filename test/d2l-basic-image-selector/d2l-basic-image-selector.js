@@ -17,29 +17,27 @@ describe('<d2l-course-tile>', function() {
 	describe('loadMore', function() {
 		beforeEach(function() {
 			widget._showGrid = true;
-			widget.$.moreSearchImagesRequest.generateRequest = sinon.stub();
-			widget.$.moreDefaultImagesRequest.generateRequest = sinon.stub();
+			widget._fetchSirenEntity = sinon.stub().returns(Promise.resolve());
 			widget.$.lazyLoadSpinner.scrollIntoView = sinon.stub();
 		});
 
 		it('generates a moreSearchImagesRequest when a nextSearchResults page exists', function() {
 			widget._nextSearchResultPage = 'http://test.com';
 			widget.loadMore();
-			expect(widget.$.moreSearchImagesRequest.generateRequest.called).to.equal(true);
+			expect(widget._fetchSirenEntity.called).to.equal(true);
 		});
 
 		it('does not generate a moreSearchImagesRequest when showGrid is false', function() {
 			widget._nextSearchResultPage = 'http://test.com';
 			widget._showGrid = false;
-			widget.$.moreSearchImagesRequest.generateRequest = sinon.stub();
 			widget.loadMore();
-			expect(widget.$.moreSearchImagesRequest.generateRequest.called).to.equal(false);
+			expect(widget._fetchSirenEntity.called).to.equal(false);
 		});
 
 		it('does not generate a moreSearchImagesRequest when there is no next search page', function() {
 			widget._nextSearchResultPage = null;
 			widget.loadMore();
-			expect(widget.$.moreSearchImagesRequest.generateRequest.called).to.equal(false);
+			expect(widget._fetchSirenEntity.called).to.equal(false);
 		});
 
 		it('shows the spinner when generating a moreSearchImagesRequest', function() {
@@ -55,7 +53,7 @@ describe('<d2l-course-tile>', function() {
 			widget.searchImages = [];
 
 			widget.loadMore();
-			expect(widget.$.moreDefaultImagesRequest.generateRequest.called).to.equal(true);
+			expect(widget._fetchSirenEntity.called).to.equal(true);
 		});
 
 		it('does not generate a moreDefaultImagesRequest when there are search images', function() {
@@ -64,7 +62,7 @@ describe('<d2l-course-tile>', function() {
 			widget._searchImages = ['this is a search image!'];
 
 			widget.loadMore();
-			expect(widget.$.moreDefaultImagesRequest.generateRequest.called).to.equal(false);
+			expect(widget._fetchSirenEntity.called).to.equal(false);
 		});
 
 		it('does not generate a moreDefaultImagesRequest when there is no next default page', function() {
@@ -72,7 +70,7 @@ describe('<d2l-course-tile>', function() {
 			widget._searchImages = [];
 
 			widget.loadMore();
-			expect(widget.$.moreDefaultImagesRequest.generateRequest.called).to.equal(false);
+			expect(widget._fetchSirenEntity.called).to.equal(false);
 		});
 
 		it('does not generate a moreDefaultImagesRequest when showGrid is false', function() {
@@ -82,7 +80,7 @@ describe('<d2l-course-tile>', function() {
 			widget._showGrid = false;
 
 			widget.loadMore();
-			expect(widget.$.moreDefaultImagesRequest.generateRequest.called).to.equal(false);
+			expect(widget._fetchSirenEntity.called).to.equal(false);
 		});
 
 		it('shows the spinner when generating a moreDefaultImagesRequest', function() {
@@ -105,8 +103,8 @@ describe('<d2l-course-tile>', function() {
 		it('hides the spinner when no response is generated', function() {
 			widget.loadMore();
 			expect(widget._loadingSpinnerClass).to.equal('d2l-basic-image-selector-hidden');
-			expect(widget.$.moreSearchImagesRequest.generateRequest.called).to.equal(false);
-			expect(widget.$.moreDefaultImagesRequest.generateRequest.called).to.equal(false);
+			expect(widget._fetchSirenEntity.called).to.equal(false);
+			expect(widget._fetchSirenEntity.called).to.equal(false);
 		});
 	});
 
@@ -126,10 +124,8 @@ describe('<d2l-course-tile>', function() {
 
 	describe('_initialize', function() {
 		beforeEach(function() {
-			widget._parseEntity = sinon.stub().returns({});
 			widget.imageCatalogLocation = 'http://test.com';
 			widget._getChangeCourseImageLink = sinon.stub();
-			widget.$.imagesRequest.generateRequest = sinon.stub();
 			widget.$$('d2l-search-widget').clear = sinon.stub();
 			widget._getSearchStringValue = sinon.stub();
 			widget.organization = {
@@ -165,28 +161,11 @@ describe('<d2l-course-tile>', function() {
 
 		beforeEach(function() {
 			response = {
-				detail: {
-					status: 200,
-					xhr: { response: {} }
-				}
-			};
-
-			widget._parseEntity = sinon.stub().returns({
 				entities: [4, 5, 6]
-			});
+			};
 			widget._setNextPage = sinon.stub();
 			widget.updateImages = sinon.stub();
 			widget._doTelemetryNextPageRequest = sinon.stub();
-		});
-
-		describe('when status is not 200', function() {
-			it('hides the loading spinner', function() {
-				var badResponse = {
-					detail: { status: 500 }
-				};
-				widget._onImagesRequestResponse(badResponse, false, false);
-				expect(widget._loadingSpinnerClass).to.equal('d2l-basic-image-selector-hidden');
-			});
 		});
 
 		it('hides the loading spinner', function() {
