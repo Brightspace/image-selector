@@ -113,10 +113,7 @@
 						}
 					}))
 					.then(function(response) {
-						if (response.ok) {
-							return response.json();
-						}
-						return Promise.reject();
+						return response.ok ? Promise.resolve() : Promise.reject();
 					})
 					.then(this._fireCourseImageMessage.bind(this, 'success'))
 					.catch(this._fireCourseImageMessage.bind(this, 'failure'));
