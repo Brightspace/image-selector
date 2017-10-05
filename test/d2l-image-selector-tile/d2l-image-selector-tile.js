@@ -10,7 +10,13 @@ describe('<d2l-image-selector-tile>', function() {
 
 	beforeEach(function() {
 		widget = fixture('d2l-image-selector-tile-fixture');
-		sinon.stub(widget, '_doTelemetrySetImageRequest');
+		widget.image = window.D2L.Hypermedia.Siren.Parse({
+			links: [{
+				rel: ['self'],
+				href: 'http://example.com'
+			}],
+			properties: {}
+		});
 	});
 
 	it('loads element', function() {
@@ -59,60 +65,66 @@ describe('<d2l-image-selector-tile>', function() {
 	});
 
 	describe('_selectImage', function() {
+		beforeEach(function() {
+			widget._getSetImageUrl = sinon.stub().returns('http://example.com/foo');
+			widget.telemetryEndpoint = 'http://example.com/bar';
+
+			window.d2lfetch.fetch = sinon.stub()
+				.returns(Promise.resolve({
+					ok: true,
+					json: function() { return Promise.resolve(); }
+				}));
+		});
+
 		it('fires a set-course-image event with the "set" parameter', function() {
 			widget._fireCourseImageMessage = sinon.stub();
-			widget._selectImage();
-			expect(widget._fireCourseImageMessage.calledWith('set')).to.equal(true);
+			return widget._selectImage().then(function() {
+				expect(widget._fireCourseImageMessage.calledWith('set')).to.equal(true);
+			});
 		});
 
 		it('fires a "image-selector-tile-image-selected event"', function() {
 			widget.fire = sinon.stub();
-			widget._selectImage();
-			expect(widget.fire.calledWith('image-selector-tile-image-selected')).to.equal(true);
+			return widget._selectImage().then(function() {
+				expect(widget.fire.calledWith('image-selector-tile-image-selected')).to.equal(true);
+			});
 		});
 
-		it('generates a setImageRequest', function() {
-			widget.$ = {
-				setImageRequest: {
-					generateRequest: sinon.stub()
-				}
-			};
-
-			widget._selectImage();
-			expect(widget.$.setImageRequest.generateRequest.called).to.equal(true);
+		it('calls the set-image URL', function() {
+			return widget._selectImage().then(function() {
+				expect(window.d2lfetch.fetch.calledWith(
+					sinon.match.has('url', widget._setImageUrl)
+				)).to.equal(true);
+			});
 		});
 
 		it('sends a telemetry event', function() {
-			widget._selectImage();
-			expect(widget._doTelemetrySetImageRequest.called).to.equal(true);
-		});
-	});
-
-	describe('_onSetImageResponse', function() {
-		it('fires a set-course-image event with the "success" parameter if the status is 200', function() {
-			var response = {
-				detail: { status: 200 }
-			};
-			widget._fireCourseImageMessage = sinon.stub();
-			widget._onSetImageResponse(response);
-			expect(widget._fireCourseImageMessage.calledWith('success')).to.equal(true);
+			return widget._selectImage().then(function() {
+				expect(window.d2lfetch.fetch.calledWith(
+					sinon.match.has('url', widget.telemetryEndpoint)
+				)).to.equal(true);
+			});
 		});
 
-		it('fires a set-course-image event with the "failure" parameter if the status is not 200', function() {
-			var response = {
-				detail: { status: 500 }
-			};
+		it('fires a set-course-image event with the "success" parameter if the set succeeds', function() {
 			widget._fireCourseImageMessage = sinon.stub();
-			widget._onSetImageResponse(response);
-			expect(widget._fireCourseImageMessage.calledWith('failure')).to.equal(true);
+			return widget._selectImage().then(function() {
+				expect(widget._fireCourseImageMessage.calledWith('success')).to.equal(true);
+			});
 		});
-	});
 
-	describe('_onSetImageError', function() {
-		it('fires a set-course-image event with the "failure" parameter', function() {
+		it('fires a set-course-image event with the "failure" parameter if the set fails', function() {
 			widget._fireCourseImageMessage = sinon.stub();
-			widget._onSetImageError();
-			expect(widget._fireCourseImageMessage.calledWith('failure')).to.equal(true);
+
+			window.d2lfetch.fetch = sinon.stub()
+				.withArgs(sinon.match.has('url', widget._setImageUrl))
+				.returns(Promise.resolve({
+					ok: false
+				}));
+
+			return widget._selectImage().catch(function() {
+				expect(widget._fireCourseImageMessage.calledWith('failure')).to.equal(true);
+			});
 		});
 	});
 
