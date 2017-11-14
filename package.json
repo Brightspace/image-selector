@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "postinstall": "polymer install",
-    "test": "npm run test:lint:js && npm run test:lint:wc && polymer test",
-    "test:lint:js": "eslint --ext .js,.html . test/",
-    "test:lint:wc": "polymer lint"
+    "test": "npm run lint && polymer test --skip-plugin sauce",
+    "lint": "npm run lint:js && npm run lint:wc",
+    "lint:js": "eslint --ext .js,.html . test/",
+    "lint:wc": "polymer lint"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
