@@ -81,7 +81,7 @@
 						setImagePath = setImageAction.href || '';
 
 					var url = this.image.getLinkByRel('self').href,
-						regex = /\/images\/[^\/?]*/i,
+						regex = /\/images\/[^/?]*/i,
 						match = url.match(regex);
 
 					if (setImagePath !== '' && match) {
