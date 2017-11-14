@@ -1,13 +1,15 @@
 language: node_js
-node_js: stable
+node_js: node
+script:
+- npm run lint
+- polymer test --skip-plugin local
 addons:
-  firefox: latest
   apt:
-    packages:
+  packages:
     - oracle-java8-installer
     - oracle-java8-set-default
-before_script:
-- npm run test:lint:js
-- npm run test:lint:wc
-script:
-- xvfb-run polymer test
+  jwt:
+    secure: T3WRB6P76ZqtpBoWBz2JM5OjhoWsg/tLsc5mqtRiZz101qG+5Ay893DAtJ9RGfYv0/uB9ijcR64xOur9o5/7Vs2HzgKEsYBe8zBZ0iL9sRLeV35Kt1pyy7vVKCD6GxOGSl/ClvZOTVHN9bFaL8QDlJfZPtNCx1HVoA+2ET+gv1IXR9cNy2M8owM2aT9O5/VXn5gTIqNZh5d2Nz3/PWI61lZusdgm+FQgUbmTBgYIj9L1ltrKsmase4xQjjlJOl/IV6msTjNMFw4oPIpzMrWRdAaqjNmb5iB0FBWrfHiqHVy1YtQR9D0Ov2SQx79GYam/4n7qS/cMRbTJNs/VfjzowtJHQ6PJaoV1ubvaPFG0ZWJjl3yTFPnJEsMHzBiReG3JG96acD/z4IOSyoYQYHr5BsyDSH5EvknmXvnMmFR6iiftLL+lKVCOuqiBZpfgP4B35/nuuFp2/BVSItXPlvHk9ng+LTWiNl0/GNuRI08eKjj5Mm0AjJ61+MQfSpqqw5IrvEawG7SK01T2SjH3/ssDNvB3TA7fHhdsYNl3XpttBmSWcjIxmG7rBRulatRKXcbhmgxpvbEVMyiUmICIvaDlJLLg21icpaKSg1KkakLGkE5rWYwxFJEOCIZxi1J+j/BghOxm+M3tBJn/zQOHw3Nr7Q+537+7/2SNP4H6oKFdfIg=
+env:
+  global:
+    SAUCE_USERNAME: Desire2Learn

@@ -14,17 +14,11 @@ bower install git://github.com/Brightspace/image-selector.git#v1.0.0
 ```html
 <d2l-basic-image-selector
 	image-catalog-location="https://course-image-catalog.api.brightspace.com"
-	organization="{ ... }"
-	user-id="169"
-	tenant-id="ec63dd64-de40-489c-a63f-b1295d8a277f"
-	telemetry-endpoint="https://telemetry-dev.cloud.desire2learn.com/api/events/c4d46116-d70c-41cc-99f0-607bc86424a7">
+	organization="{ ... }">
 </d2l-basic-image-selector>
 ```
 `image-catalog-location` is the URL of the course image catalog HM service
 `organization` is the Siren representation of an organization in the LMS
-`user-id` is the ID of the user in Brightspace who is currently using the image-selector
-`tenant-id` is the tenant ID of the Brightspace instance
-`telemetry-endpoint` is the URL of the telemetry service that events are being sent to
 
 For more examples, see its use in the [My Courses](https://github.com/Brightspace/d2l-my-courses-ui/blob/master/d2l-my-courses.html#L134) widget.
 

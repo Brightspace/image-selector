@@ -67,7 +67,6 @@ describe('<d2l-image-selector-tile>', function() {
 	describe('_selectImage', function() {
 		beforeEach(function() {
 			widget._getSetImageUrl = sinon.stub().returns('http://example.com/foo');
-			widget.telemetryEndpoint = 'http://example.com/bar';
 
 			window.d2lfetch.fetch = sinon.stub()
 				.returns(Promise.resolve({
@@ -94,14 +93,6 @@ describe('<d2l-image-selector-tile>', function() {
 			return widget._selectImage().then(function() {
 				expect(window.d2lfetch.fetch.calledWith(
 					sinon.match.has('url', widget._setImageUrl)
-				)).to.equal(true);
-			});
-		});
-
-		it('sends a telemetry event', function() {
-			return widget._selectImage().then(function() {
-				expect(window.d2lfetch.fetch.calledWith(
-					sinon.match.has('url', widget.telemetryEndpoint)
 				)).to.equal(true);
 			});
 		});

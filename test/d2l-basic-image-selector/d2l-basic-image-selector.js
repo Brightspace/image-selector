@@ -7,7 +7,6 @@ describe('<d2l-course-tile>', function() {
 
 	beforeEach(function() {
 		widget = fixture('d2l-basic-image-selector-fixture');
-		sinon.stub(widget, '_doTelemetryNextPageRequest');
 	});
 
 	it('loads element', function() {
@@ -165,7 +164,6 @@ describe('<d2l-course-tile>', function() {
 			};
 			widget._setNextPage = sinon.stub();
 			widget.updateImages = sinon.stub();
-			widget._doTelemetryNextPageRequest = sinon.stub();
 		});
 
 		it('hides the loading spinner', function() {
@@ -190,11 +188,6 @@ describe('<d2l-course-tile>', function() {
 
 				expect(widget._searchImages).to.deep.equal([1, 2, 3, 4, 5, 6]);
 				expect(widget._defaultImages).to.deep.equal([1, 2, 3]);
-			});
-
-			it('sends a telemetry event', function() {
-				widget._onImagesRequestResponse(response, true, true);
-				expect(widget._doTelemetryNextPageRequest.called).to.equal(true);
 			});
 		});
 
@@ -386,7 +379,6 @@ describe('<d2l-course-tile>', function() {
 			widget._displayDefaultResults = sinon.stub();
 			widget._displaySearchResults = sinon.stub();
 			widget._setNextPage = sinon.stub();
-			widget._doTelemetrySearchRequest = sinon.stub();
 		});
 
 		describe('empty search', function() {
@@ -407,11 +399,6 @@ describe('<d2l-course-tile>', function() {
 				widget._searchResultsChanged(response);
 				expect(widget._setNextPage.calledWith(response.detail)).to.equal(true);
 				expect(widget._displayDefaultResults.called).to.equal(false);
-			});
-
-			it('sends a telemetry event', function() {
-				widget._searchResultsChanged(response);
-				expect(widget._doTelemetrySearchRequest.called).to.equal(true);
 			});
 		});
 	});
