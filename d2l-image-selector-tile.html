@@ -59,12 +59,8 @@
 					value: { mobile: { size: 100 }, tablet: { size: 50 }, desktop: { size: 33 } }
 				},
 				organization: Object,
-				userId: String,
-				tenantId: String,
-				telemetryEndpoint: String,
 				_setImageUrl: String,
-				_imageClass: String,
-				_telemetrySetImageEvent: String
+				_imageClass: String
 			},
 			behaviors: [
 				window.D2L.ImageSelector.LocalizeBehavior,
@@ -118,27 +114,10 @@
 					.then(this._fireCourseImageMessage.bind(this, 'success'))
 					.catch(this._fireCourseImageMessage.bind(this, 'failure'));
 
-				var event = {
-					name: 'SelectedImage',
-					ts: Math.round(Date.now() / 1000),
-					imageId: this.image.getLinkByRel('self').href,
-					imageTags: this.image.properties.tags + ',' + this.image.properties.categories,
-					userId: this.userId,
-					tenantId: this.tenantId
-				};
-				var telemetryPromise = window.d2lfetch
-					.fetch(new Request(this.telemetryEndpoint, {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify(event)
-					}));
-
 				this._fireCourseImageMessage('set');
 				this.fire('image-selector-tile-image-selected');
 
-				return Promise.all([setImagePromise, telemetryPromise]);
+				return setImagePromise;
 			},
 			_updateImageSource: function() {
 				var courseImage = Polymer.dom(this.root).querySelector('img');

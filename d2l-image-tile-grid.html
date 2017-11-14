@@ -107,12 +107,7 @@
 				<d2l-image-selector-tile
 					image="[[item]]"
 					organization="[[organization]]"
-					class="grid-child"
-					user-id="[[userId]]"
-					tenant-id="[[tenantId]]"
-					telemetry-endpoint="[[telemetryEndpoint]]"
-					>
-				</d2l-image-selector-tile>
+					class="grid-child"></d2l-image-selector-tile>
 			</template>
 		</div>
 
@@ -127,10 +122,7 @@
 					type: Array,
 					observer: '_imagesChanged'
 				},
-				organization: Object,
-				userId: String,
-				tenantId: String,
-				telemetryEndpoint: String
+				organization: Object
 			},
 			_imagesChanged: function(newValue) {
 				if (!newValue || newValue.length === 0) {

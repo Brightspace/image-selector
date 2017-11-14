@@ -80,11 +80,7 @@
 			<d2l-image-tile-grid
 				id="image-grid"
 				organization="[[organization]]"
-				images="[[_images]]"
-				user-id="[[userId]]"
-				tenant-id="[[tenantId]]"
-				telemetry-endpoint="[[telemetryEndpoint]]"
-			></d2l-image-tile-grid>
+				images="[[_images]]"></d2l-image-tile-grid>
 		</template>
 
 		<template is="dom-if" if="{{!_showGrid}}">
@@ -114,9 +110,6 @@
 				courseImageUploadCb: Function,
 				imageCatalogLocation: String,
 				organization: Object,
-				userId: String,
-				tenantId: String,
-				telemetryEndpoint: String,
 				_searchString: String,
 				_images: Array,
 				_searchAction: String,
@@ -162,7 +155,6 @@
 				if (userSearchText) {
 					this._displaySearchResults(userSearchText);
 					this._setNextPage(response.detail, false);
-					this._doTelemetrySearchRequest(userSearchText);
 				} else {
 					// Throw out empty searches
 					// TODO: d2l-search-widget property that sends events instead of making network calls
@@ -209,9 +201,6 @@
 				if (loadMore) {
 					newImages = (isDefault ? this._defaultImages : this._searchImages) || [];
 					newImages = newImages.concat(responseEntity.entities);
-
-					this._doTelemetryNextPageRequest(responseEntity);
-
 				} else {
 					newImages = responseEntity.entities;
 				}
@@ -314,65 +303,8 @@
 			_onDefaultImagesRequestResponse: function(responseEntity) {
 				this._onImagesRequestResponse(responseEntity, false, true);
 			},
-			_uploadTelemetry: function() {
-				var event = {
-					ts: Math.round(Date.now() / 1000),
-					name: 'CourseImageUpload',
-					userId: this.userId,
-					tenantId: this.tenantId
-				};
-
-				this._sendTelemetryEvent(event);
-			},
-			_doTelemetryNextPageRequest: function(entity) {
-				var searchRegex = /search=([^&]*)/,
-					match = searchRegex.exec(this._searchString);
-				var searchWidget = this.$$('d2l-search-widget');
-				var pagingInfo = this._getPagingInfo(entity);
-				var event = {
-					ts: Math.round(Date.now() / 1000),
-					name: 'NextImagePageNavigation',
-					resultsPageNumber: pagingInfo.page,
-					totalResults: pagingInfo.total,
-					search: searchWidget._searchString === '' ? match[1] : searchWidget._searchString,
-					userId: this.userId,
-					tenantId: this.tenantId
-				};
-
-				this._sendTelemetryEvent(event);
-			},
-			_getPagingInfo: function(entity) {
-				var pagingInfo = {
-					page: 'error retrieving page info',
-					total: 'error retrieving total info'
-				};
-				if (entity.properties && entity.properties.pagingInfo) {
-					pagingInfo = entity.properties.pagingInfo;
-				}
-				return pagingInfo;
-			},
-			_doTelemetrySearchRequest: function() {
-				var searchWidget = this.$$('d2l-search-widget'),
-					total = searchWidget.searchResults
-							&& searchWidget.searchResults.properties
-							&& searchWidget.searchResults.properties.pagingInfo
-							&& searchWidget.searchResults.properties.pagingInfo.total
-							? searchWidget.searchResults.properties.pagingInfo.total
-							: 0;
-				var event = {
-					ts: Math.round(Date.now() / 1000),
-					name: 'SearchImageCatalog',
-					totalResults: total,
-					search: searchWidget._searchString,
-					userId: this.userId,
-					tenantId: this.tenantId
-				};
-
-				this._sendTelemetryEvent(event);
-			},
 			_handleUpload: function(e) {
 				if ((e.type === 'keydown' && e.keyCode === 13) || (e.type === 'tap')) {
-					this._uploadTelemetry();
 					if (this.courseImageUploadCb) {
 						this.courseImageUploadCb();
 					} else {
@@ -394,16 +326,6 @@
 						Promise.reject(response.status + ' ' + response.statusText);
 					})
 					.then(window.D2L.Hypermedia.Siren.Parse);
-			},
-			_sendTelemetryEvent: function(event) {
-				return window.d2lfetch
-					.fetch(new Request(this.telemetryEndpoint, {
-						method: 'POST',
-						headers: {
-							'content-type': 'application/json'
-						},
-						body: JSON.stringify(event)
-					}));
 			}
 		});
 	</script>
