@@ -148,7 +148,7 @@
 			_defaultImages: [],
 			_searchResultsChanged: function(response) {
 				var searchRegex = /search=([^&]*)/,
-					searchHref = decodeURIComponent( response.detail.getLinkByRel('self').href ),
+					searchHref = decodeURIComponent(response.detail.getLinkByRel('self').href),
 					match = searchRegex.exec(searchHref),
 					userSearchText = (match.length > 1) ? match[1] : null;
 
