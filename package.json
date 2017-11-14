@@ -3,20 +3,17 @@
   "description": "Polymer-based web component for a D2L image selector",
   "private": true,
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "polymer install",
     "test": "npm run test:lint:js && npm run test:lint:wc && polymer test",
     "test:lint:js": "eslint --ext .js,.html . test/",
-    "test:lint:wc": "polymer lint",
-    "test:no-lint": "cross-env LAUNCHPAD_BROWSERS=chrome wct -p"
+    "test:lint:wc": "polymer lint"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
   "devDependencies": {
-    "bower": "^1.8.0",
-    "cross-env": "^5.0.5",
     "eslint": "^3.14.0",
     "eslint-config-brightspace": "^0.2.4",
     "eslint-plugin-html": "^1.7.0",
-    "polymer-cli": "^1.5.5"
+    "polymer-cli": "^1.5.7"
   }
 }
