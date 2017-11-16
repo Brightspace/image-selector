@@ -1,7 +1,3 @@
-/* global describe, it, beforeEach, fixture, expect, sinon */
-
-'use strict';
-
 describe('<d2l-course-tile>', function() {
 	var widget;
 
