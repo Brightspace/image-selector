@@ -9,22 +9,6 @@ describe('localize behavior', function() {
 		document.documentElement.removeAttribute('lang');
 	});
 
-	it('should have default locale', function() {
-		component = fixture('default-fixture');
-
-		expect(component.locale).to.equal('en-us');
-		expect(component.localize('upload')).to.equal('Upload');
-	});
-
-	it('should use default locale if provided locale does not exist', function() {
-		document.documentElement.setAttribute('lang', 'zz-ZZ');
-
-		component = fixture('default-fixture');
-
-		expect(component.locale).to.equal('zz-ZZ');
-		expect(component.localize('upload')).to.equal('Upload');
-	});
-
 	describe('localize mappings', function() {
 		it('should have translation for every english term', function() {
 			component = fixture('default-fixture');
