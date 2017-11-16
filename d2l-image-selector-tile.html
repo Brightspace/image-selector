@@ -1,11 +1,11 @@
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../d2l-course-image/d2l-course-image.html">
 <link rel="import" href="../d2l-fetch/d2l-fetch.html">
 <link rel="import" href="../d2l-icons/d2l-icons.html">
-<link rel="import" href="../d2l-course-image/d2l-course-image.html">
-<link rel="import" href="d2l-course-tile-grid-styles.html">
 <link rel="import" href="../d2l-organization-hm-behavior/d2l-organization-hm-behavior.html">
-<link rel="import" href="localize-behavior.html">
+<link rel="import" href="d2l-course-tile-grid-styles.html">
 <link rel="import" href="d2l-image-selector-tile-styles.html">
+<link rel="import" href="localize-behavior.html">
 
 <dom-module id="d2l-image-selector-tile">
 	<template>
@@ -62,7 +62,7 @@
 				_imageClass: String
 			},
 			behaviors: [
-				window.D2L.ImageSelector.LocalizeBehavior,
+				D2L.PolymerBehaviors.ImageSelector.LocalizeBehavior,
 				window.D2L.Hypermedia.OrganizationHMBehavior
 			],
 			_getTileClass: function(image) {
