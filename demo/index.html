@@ -5,10 +5,16 @@
 		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 		<title>d2l-image-selector demo</title>
 		<script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+		<link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+		<link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
 		<link rel="import" href="../../d2l-typography/d2l-typography.html">
 		<link rel="import" href="../d2l-basic-image-selector.html">
-		<style is="custom-style" include="demo-pages-shared-styles"></style>
-		<style is="custom-style" include="d2l-typography"></style>
+		<custom-style>
+			<style is="custom-style" include="demo-pages-shared-styles"></style>
+		</custom-style>
+		<custom-style include="d2l-typography">
+			<style is="custom-style" include="d2l-typography"></style>
+		</custom-style>
 		<style>
 			html {
 				font-size: 20px;
@@ -19,31 +25,26 @@
 		<div class="vertical-section-container centered">
 
 			<h3>Basic Image Selector</h3>
-			<template id="bindingTemplate" is="dom-bind">
-				<d2l-basic-image-selector
-					organization="[[organization]]"
-					image-catalog-location="https://course-image-catalog.api.brightspace.com">
-				</d2l-basic-image-selector>
-			</template>
+			<demo-snippet>
+				<template>
+					<d2l-basic-image-selector image-catalog-location="https://course-image-catalog.api.brightspace.com">
+					</d2l-basic-image-selector>
+					<button id="loadMore">Load More</button>
+				</template>
+			</demo-snippet>
+
 		</div>
-
-		<button id="loadMore">Load More</button>
-
 		<script>
 
-			var template = document.getElementById('bindingTemplate');
-			template.addEventListener('dom-change', function() {
-				document.body.querySelector('d2l-basic-image-selector')._initialize();
-			});
+			window.addEventListener('WebComponentsReady', function(e) {
 
-			template.organization = window.D2L.Hypermedia.Siren.Parse({
-				properties: {
-					name: 'name'
-				}
-			});
+				var imageSelector = document.body.querySelector('d2l-basic-image-selector');
+				imageSelector._initialize();
 
-			document.getElementById('loadMore').addEventListener('click', function() {
-				document.body.querySelector('d2l-basic-image-selector').loadMore();
+				document.getElementById('loadMore').addEventListener('click', function() {
+					imageSelector.loadMore();
+				});
+
 			});
 
 			document.body.addEventListener('set-course-image', function(e) {
@@ -53,7 +54,7 @@
 			window.d2lfetch = {
 				fetch: function(req) {
 					if (req.method === 'POST') {
-						return Promise.resolve(new Response(null, { "status": "500" }));
+						return Promise.resolve(new Response(null, { "status": "200" }));
 					}
 					return window.fetch(req.url);
 				}
