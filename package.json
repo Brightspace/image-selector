@@ -3,11 +3,12 @@
   "description": "Polymer-based web component for a D2L image selector",
   "private": true,
   "scripts": {
-    "postinstall": "polymer install",
-    "test": "npm run lint && polymer test --skip-plugin sauce",
-    "lint": "npm run lint:js && npm run lint:wc",
-    "lint:js": "eslint *.html",
-    "lint:wc": "polymer lint -i *.html"
+    "postinstall": "polymer install --variants",
+    "test": "npm run test:lint && npm run test:unit:local",
+    "test:lint": "npm run test:lint:js && npm run test:lint:wc",
+    "test:lint:js": "eslint *.html",
+    "test:lint:wc": "polymer lint -i *.html",
+    "test:unit:local": "polymer test --skip-plugin sauce"
   },
   "author": "D2L Corporation",
   "license": "Apache-2.0",
