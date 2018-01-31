@@ -36,11 +36,11 @@
 				document.body.querySelector('d2l-basic-image-selector')._initialize();
 			});
 
-			template.organization = window.D2L.Hypermedia.Siren.Parse({
+			template.organization = {
 				properties: {
 					name: 'name'
 				}
-			});
+			};
 
 			document.getElementById('loadMore').addEventListener('click', function() {
 				document.body.querySelector('d2l-basic-image-selector').loadMore();

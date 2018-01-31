@@ -4,6 +4,7 @@
 <link rel="import" href="../d2l-icons/d2l-icons.html">
 <link rel="import" href="../d2l-loading-spinner/d2l-loading-spinner.html">
 <link rel="import" href="../d2l-search-widget/d2l-search-widget.html">
+<link rel="import" href="../siren-parser-import/siren-parser-global.html">
 <link rel="import" href="d2l-image-tile-grid.html">
 <link rel="import" href="localize-behavior.html">
 
@@ -97,7 +98,6 @@
 			size="100">
 		</d2l-loading-spinner>
 	</template>
-	<script src="https://s.brightspace.com/lib/siren-parser/6.1.0/siren-parser-global.js"></script>
 	<script>
 		Polymer({
 			is: 'd2l-basic-image-selector',
@@ -128,6 +128,9 @@
 				'd2l-simple-overlay-opening': '_initialize',
 				'd2l-simple-overlay-closed': '_clear'
 			},
+			observers: [
+				'_onOrganizationChanged(organization)'
+			],
 			attached: function() {
 				this.listen(
 					this.$$('d2l-search-widget'),
@@ -210,6 +213,11 @@
 				}
 				this._setNextPage(responseEntity, isDefault);
 				this._updateImages();
+			},
+			_onOrganizationChanged: function(organization) {
+				if (!organization.getLinkByRel) {
+					this.organization = window.D2L.Hypermedia.Siren.Parse(organization);
+				}
 			},
 			_initialize: function() {
 				this._searchAction = JSON.stringify(this._getSearchAction());
