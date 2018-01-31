@@ -130,6 +130,10 @@ describe('<d2l-course-tile>', function() {
 			};
 		});
 
+		it('parses the passed-in organization, if not already parsed', function() {
+			expect(widget.organization.getLinkByRel).to.be.a('function');
+		});
+
 		it('clears the search widget', function() {
 			widget._initialize();
 			expect(widget.$$('d2l-search-widget').clear.called).to.equal(true);
