@@ -6,24 +6,18 @@
     "D2L Corporation"
   ],
   "license": "Apache-2.0",
-  "keywords": [
-    "d2l",
-    "ui",
-    "image",
-    "selector",
-    "polymer",
-    "web",
-    "component"
-  ],
-  "moduleType": [],
   "homepage": "https://github.com/Brightspace/image-selector",
   "private": true,
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
+		"demo",
     "test",
-    "tests"
+    ".editorconfig",
+    ".eslintrc.json",
+    ".gitignore",
+    ".travis.yml",
+    "package.json",
+    "polymer.json",
+    "wct.conf.json"
   ],
   "dependencies": {
     "polymer": "^1.11.0",
