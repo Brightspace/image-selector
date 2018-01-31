@@ -37,6 +37,7 @@
     "d2l-search-widget": "Brightspace/d2l-search-widget-ui#^2.0.1"
   },
   "devDependencies": {
+    "d2l-typography": "^5.5.0",
     "web-component-tester": "^6.4.0"
   },
   "resolutions": {
