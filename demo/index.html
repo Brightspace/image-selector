@@ -39,6 +39,19 @@
 			window.addEventListener('WebComponentsReady', function(e) {
 
 				var imageSelector = document.body.querySelector('d2l-basic-image-selector');
+				imageSelector.courseImageUploadCb = function() {
+					console.log('courseImageUploadCb called!');
+				};
+				imageSelector.organization = window.D2L.Hypermedia.Siren.Parse({
+					properties: {
+						name: 'name'
+					},
+					links: [{
+						href: "https://some-domain.com/course_offering_info_viewedit.d2l",
+						rel: ["https://api.brightspace.com/rels/course-offering-info-page"],
+						type: "text/html"
+					}]
+				});
 				imageSelector._initialize();
 
 				document.getElementById('loadMore').addEventListener('click', function() {
