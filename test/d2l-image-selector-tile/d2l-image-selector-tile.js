@@ -6,13 +6,13 @@ describe('<d2l-image-selector-tile>', function() {
 
 	beforeEach(function() {
 		widget = fixture('d2l-image-selector-tile-fixture');
-		widget.image = window.D2L.Hypermedia.Siren.Parse({
+		widget.image = {
 			links: [{
 				rel: ['self'],
 				href: 'http://example.com'
 			}],
 			properties: {}
-		});
+		};
 	});
 
 	it('loads element', function() {
