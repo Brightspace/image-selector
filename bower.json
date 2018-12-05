@@ -9,7 +9,7 @@
   "homepage": "https://github.com/Brightspace/image-selector",
   "private": true,
   "ignore": [
-		"demo",
+    "demo",
     "test",
     ".editorconfig",
     ".eslintrc.json",
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "d2l-typography": "^6.0.0",
+    "fetch": "whatwg-fetch#^2.0.3",
     "iron-component-page": "^2.0.0",
     "iron-demo-helpers": "^2.0.0",
     "web-component-tester": "^6.4.0"
