@@ -16,7 +16,7 @@ import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-icons/d2l-icons.js';
 import 'd2l-loading-spinner/d2l-loading-spinner.js';
 import 'd2l-search-widget/d2l-search-widget.js';
-import 'siren-parser/siren-parser.js';
+import SirenParse from 'siren-parser';
 import './d2l-image-tile-grid.js';
 import './localize-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
@@ -231,7 +231,7 @@ Polymer({
 
   _onOrganizationChanged: function(organization) {
 	  if (!organization.getLinkByRel) {
-		  this.organization = window.D2L.Hypermedia.Siren.Parse(organization);
+		  this.organization = SirenParse(organization);
 	  }
   },
 
@@ -359,6 +359,6 @@ Polymer({
 			  }
 			  Promise.reject(response.status + ' ' + response.statusText);
 		  })
-		  .then(window.D2L.Hypermedia.Siren.Parse);
+		  .then(SirenParse);
   }
 });

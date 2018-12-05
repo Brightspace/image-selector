@@ -71,6 +71,7 @@ import '@polymer/iron-demo-helpers/demo-pages-shared-styles.js';
 import '@polymer/iron-demo-helpers/demo-snippet.js';
 import 'd2l-typography/d2l-typography.js';
 import '../d2l-basic-image-selector.js';
+import SirenParse from 'siren-parser';
 
 window.addEventListener('WebComponentsReady', function(e) {
 
@@ -78,7 +79,7 @@ window.addEventListener('WebComponentsReady', function(e) {
 	imageSelector.courseImageUploadCb = function() {
 		console.log('courseImageUploadCb called!');
 	};
-	imageSelector.organization = window.D2L.Hypermedia.Siren.Parse({
+	imageSelector.organization = SirenParse({
 		properties: {
 			name: 'name'
 		},
