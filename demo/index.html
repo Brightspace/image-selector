@@ -35,21 +35,20 @@
 
 		</div>
 		<script>
-
-			window.addEventListener('WebComponentsReady', function(e) {
+			window.addEventListener('WebComponentsReady', function() {
 
 				var imageSelector = document.body.querySelector('d2l-basic-image-selector');
 				imageSelector.courseImageUploadCb = function() {
-					console.log('courseImageUploadCb called!');
+					console.log('courseImageUploadCb called!'); // eslint-disable-line no-console
 				};
 				imageSelector.organization = window.D2L.Hypermedia.Siren.Parse({
 					properties: {
 						name: 'name'
 					},
 					links: [{
-						href: "https://some-domain.com/course_offering_info_viewedit.d2l",
-						rel: ["https://api.brightspace.com/rels/course-offering-info-page"],
-						type: "text/html"
+						href: 'https://some-domain.com/course_offering_info_viewedit.d2l',
+						rel: ['https://api.brightspace.com/rels/course-offering-info-page'],
+						type: 'text/html'
 					}]
 				});
 				imageSelector._initialize();
@@ -61,13 +60,13 @@
 			});
 
 			document.body.addEventListener('set-course-image', function(e) {
-				console.log('set-course-image', e.detail);
+				console.log('set-course-image', e.detail); // eslint-disable-line no-console
 			});
 
 			window.d2lfetch = {
 				fetch: function(req) {
 					if (req.method === 'POST') {
-						return Promise.resolve(new Response(null, { "status": "200" }));
+						return Promise.resolve(new Response(null, { 'status': '200' }));
 					}
 					return window.fetch(req.url);
 				}
