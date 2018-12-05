@@ -1,8 +1,10 @@
-<link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="d2l-image-selector-tile.html">
+import '@polymer/polymer/polymer-legacy.js';
+import './d2l-image-selector-tile.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
 
-<dom-module id="d2l-image-tile-grid">
-	<template>
+Polymer({
+  _template: html`
 		<style>
 		:host {
 			--breakpoint-gutter-width: 0.8%;
@@ -104,35 +106,28 @@
 
 		<div class="image-selector-tile-container responsive-columns-3-2-1 grid-container">
 			<template id="enrollmentsTemplate" is="dom-repeat" items="[[images]]">
-				<d2l-image-selector-tile
-					image="[[item]]"
-					organization="[[organization]]"
-					class="grid-child"></d2l-image-selector-tile>
+				<d2l-image-selector-tile image="[[item]]" organization="[[organization]]" class="grid-child"></d2l-image-selector-tile>
 			</template>
 		</div>
+`,
 
-	</template>
-	<script>
-		'use strict';
+  is: 'd2l-image-tile-grid',
 
-		Polymer({
-			is: 'd2l-image-tile-grid',
-			properties: {
-				images: {
-					type: Array,
-					observer: '_imagesChanged'
-				},
-				organization: Object
-			},
-			_imagesChanged: function(newValue) {
-				if (!newValue || newValue.length === 0) {
-					var newArray = new Array(20);
-					for (var i = 0; i < 20; i++) {
-						newArray[i] = null;
-					}
-					this.images = newArray;
-				}
-			}
-		});
-	</script>
-</dom-module>
+  properties: {
+	  images: {
+		  type: Array,
+		  observer: '_imagesChanged'
+	  },
+	  organization: Object
+  },
+
+  _imagesChanged: function(newValue) {
+	  if (!newValue || newValue.length === 0) {
+		  var newArray = new Array(20);
+		  for (var i = 0; i < 20; i++) {
+			  newArray[i] = null;
+		  }
+		  this.images = newArray;
+	  }
+  }
+});
