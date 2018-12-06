@@ -208,7 +208,9 @@ Polymer-based web component for a D2L image selector
 
 				if (loadMore) {
 					newImages = (isDefault ? this._defaultImages : this._searchImages) || [];
-					newImages = newImages.concat(responseEntity.entities);
+					if (responseEntity.entities) {
+						newImages = newImages.concat(responseEntity.entities);
+					}
 				} else {
 					newImages = responseEntity.entities;
 				}
