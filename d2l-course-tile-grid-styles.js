@@ -1,5 +1,7 @@
-<dom-module id="d2l-course-tile-grid-styles">
-	<template>
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<dom-module id="d2l-course-tile-grid-styles">
+	<template strip-whitespace="">
 		<style>
 		:host {
 			display: block;
@@ -19,7 +21,7 @@
 			* Since the leftmost and rightmost tiles have zero margin on their left and right, respectively.
 			*
 			* Move things around, let x = tile width and y = margin width (n is number of columns)
-			* 	x = (1 + 2y - 2ny) / n
+			*	 x = (1 + 2y - 2ny) / n
 			*
 			* We can therefore find x (tile width) for any given y (margin).
 			* The following all use a 1% margin and the formula above.
@@ -80,4 +82,6 @@
 		}
 		</style>
 	</template>
-</dom-module>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);
