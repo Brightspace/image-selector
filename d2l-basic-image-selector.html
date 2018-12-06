@@ -185,6 +185,11 @@ Polymer-based web component for a D2L image selector
 				this._showGrid = (userSearchText || '') === '' || this._searchImages.length > 0;
 			},
 			_setNextPage: function(response, isDefault) {
+
+				if (!response) {
+					return;
+				}
+
 				var nextPage = response.getLinkByRel('next') || {},
 					nextPageHref = nextPage.href || null;
 
@@ -208,7 +213,7 @@ Polymer-based web component for a D2L image selector
 
 				if (loadMore) {
 					newImages = (isDefault ? this._defaultImages : this._searchImages) || [];
-					if (responseEntity.entities) {
+					if (responseEntity && responseEntity.entities) {
 						newImages = newImages.concat(responseEntity.entities);
 					}
 				} else {
@@ -242,7 +247,7 @@ Polymer-based web component for a D2L image selector
 					this._searchString = this._getSearchStringValue('THIS_WILL_RETURN_NOTHING', true);
 				}
 
-				if (this._searchString !== null) {
+				if (this._searchString !== undefined && this._searchString !== null) {
 					return this._fetchSirenEntity(this._searchString)
 						.then(this._onDefaultImagesRequestResponse.bind(this));
 				}
