@@ -1,6 +1,8 @@
-<link rel="import" href="../d2l-colors/d2l-colors.html">
-<dom-module id="d2l-image-selector-tile-styles">
-	<template>
+import 'd2l-colors/d2l-colors.js';
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<dom-module id="d2l-image-selector-tile-styles">
+	<template strip-whitespace="">
 		<style>
 			:host {
 				background-color: lightgrey;
@@ -131,4 +133,6 @@
 			}
 		</style>
 	</template>
-</dom-module>
+</dom-module>`;
+
+document.head.appendChild($_documentContainer.content);
