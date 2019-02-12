@@ -102,6 +102,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-basic-image-selector">
 		</d2l-loading-spinner>
 	</template>
 
+	
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
@@ -323,6 +324,7 @@ Polymer({
 		this._onImagesRequestResponse(responseEntity, false, true);
 	},
 	_handleUpload: function(e) {
+		document.querySelector('d2l-my-courses').getLastOrgUnitIdImageSelector(this.organization);
 		if ((e.type === 'keydown' && e.keyCode === 13) || (e.type === 'tap')) {
 			if (this.courseImageUploadCb) {
 				this.courseImageUploadCb();
