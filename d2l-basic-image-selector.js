@@ -74,7 +74,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-basic-image-selector">
 		</style>
 
 		<div class="top-section">
-			<d2l-search-widget id="image-search" class="small" search-action="[[_searchAction]]" placeholder-text="[[localize('search')]]" search-field-name="search">
+			<d2l-search-widget id="image-search" search-action="[[_searchAction]]" placeholder-text="[[localize('search')]]" search-field-name="search">
 			</d2l-search-widget>
 
 			<template is="dom-if" if="{{_organizationChangeImageHref}}" restamp="true">
@@ -154,14 +154,9 @@ Polymer({
 	_searchImages: [],
 	_defaultImages: [],
 	_searchResultsChanged: function(response) {
-		var searchRegex = /search=([^&]*)/,
-			searchHref = decodeURIComponent(response.detail.getLinkByRel('self').href),
-			match = searchRegex.exec(searchHref),
-			userSearchText = (match.length > 1) ? match[1] : null;
-
-		if (userSearchText) {
-			this._displaySearchResults(userSearchText);
-			this._setNextPage(response.detail, false);
+		if (response.detail.searchValue) {
+			this._displaySearchResults(response.detail.searchValue, response.detail.searchResponse);
+			this._setNextPage(response.detail.searchResponse, false);
 		} else {
 			// Throw out empty searches
 			// TODO: d2l-search-widget property that sends events instead of making network calls
@@ -170,13 +165,12 @@ Polymer({
 
 		this._updateImages();
 	},
-	_displaySearchResults: function(userSearchText) {
-		var searchWidget = this.$$('d2l-search-widget'),
-			delimiter = '$$$DELIMITER???',
+	_displaySearchResults: function(userSearchText, searchResults) {
+		var delimiter = '$$$DELIMITER???',
 			noResultsText = this.localize('images.noResults', 'search', delimiter),
 			noResultsSplit = noResultsText.split(delimiter);
 
-		this._searchImages = searchWidget.searchResults.entities || [];
+		this._searchImages = searchResults.entities || [];
 		this._noResultsTextStart = noResultsSplit[0];
 		this._noResultsTextMid = userSearchText;
 		this._noResultsTextEnd = noResultsSplit[1];
