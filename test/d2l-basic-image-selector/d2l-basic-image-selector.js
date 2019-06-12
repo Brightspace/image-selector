@@ -307,45 +307,46 @@ describe('<d2l-course-tile>', function() {
 	});
 
 	describe('_displaySearchResults', function() {
-		var userSearchText;
+		var userSearchText,
+			searchResults;
 
 		beforeEach(function() {
-			widget.$$('d2l-search-widget').searchResults = {
+			userSearchText = 'SEARCH';
+			searchResults = {
 				entities: [1, 2, 3]
 			};
-			userSearchText = 'SEARCH';
 		});
 
 		it('sets _noResultsTextStart to the first half of the langTerm', function() {
-			widget._displaySearchResults(userSearchText);
+			widget._displaySearchResults(userSearchText, searchResults);
 			expect(widget._noResultsTextStart).to.equal('No results found for ');
 		});
 
 		it('sets _noResultsTextMid to the search term', function() {
-			widget._displaySearchResults(userSearchText);
+			widget._displaySearchResults(userSearchText, searchResults);
 			expect(widget._noResultsTextMid).to.equal(userSearchText);
 		});
 
 		it('sets _noResultsTextEnd to the second half of the langTerm', function() {
-			widget._displaySearchResults(userSearchText);
+			widget._displaySearchResults(userSearchText, searchResults);
 			expect(widget._noResultsTextEnd).to.equal('.');
 		});
 
 		it('sets _searchImages to the result from the search widget', function() {
-			widget._displaySearchResults(userSearchText);
-			expect(widget._searchImages).to.deep.equal(widget.$$('d2l-search-widget').searchResults.entities);
+			widget._displaySearchResults(userSearchText, searchResults);
+			expect(widget._searchImages).to.deep.equal(searchResults.entities);
 		});
 
 		it('sets _showGrid to true if there was search results', function() {
-			widget._displaySearchResults(userSearchText);
+			widget._displaySearchResults(userSearchText, searchResults);
 			expect(widget._showGrid).to.equal(true);
 		});
 
 		it('sets _showGrid to false if there was no search results', function() {
-			widget.$$('d2l-search-widget').searchResults = {
+			searchResults = {
 				entities: null
 			};
-			widget._displaySearchResults(userSearchText);
+			widget._displaySearchResults(userSearchText, searchResults);
 			expect(widget._showGrid).to.equal(false);
 		});
 	});
@@ -362,17 +363,23 @@ describe('<d2l-course-tile>', function() {
 
 			emptyResponse = {
 				detail: {
-					getLinkByRel: sinon.stub().returns({
-						href: href
-					})
+					searchValue: '',
+					searchResponse: {
+						getLinkByRel: sinon.stub().returns({
+							href: href
+						})
+					}
 				}
 			};
 
 			response = {
 				detail: {
-					getLinkByRel: sinon.stub().returns({
-						href: searchHref
-					})
+					searchValue: 'TREE',
+					searchResponse: {
+						getLinkByRel: sinon.stub().returns({
+							href: searchHref
+						})
+					}
 				}
 			};
 
@@ -385,19 +392,20 @@ describe('<d2l-course-tile>', function() {
 			it('displays the default results', function() {
 				widget._searchResultsChanged(emptyResponse);
 				expect(widget._displayDefaultResults.called).to.equal(true);
+				expect(widget._displaySearchResults.called).to.equal(false);
 			});
 		});
 
 		describe('not empty search', function() {
 			it('displays the results', function() {
 				widget._searchResultsChanged(response);
-				expect(widget._displaySearchResults.calledWith('TREE')).to.equal(true);
+				expect(widget._displaySearchResults.calledWithExactly('TREE', response.detail.searchResponse)).to.equal(true);
 				expect(widget._displayDefaultResults.called).to.equal(false);
 			});
 
 			it('sets the next page', function() {
 				widget._searchResultsChanged(response);
-				expect(widget._setNextPage.calledWith(response.detail)).to.equal(true);
+				expect(widget._setNextPage.calledWith(response.detail.searchResponse)).to.equal(true);
 				expect(widget._displayDefaultResults.called).to.equal(false);
 			});
 		});
