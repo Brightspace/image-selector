@@ -3,7 +3,6 @@ import 'd2l-course-image/d2l-course-image.js';
 import 'd2l-fetch/d2l-fetch.js';
 import 'd2l-icons/d2l-icons.js';
 import 'd2l-organization-hm-behavior/d2l-organization-hm-behavior.js';
-import './d2l-course-tile-grid-styles.js';
 import './d2l-image-selector-tile-styles.js';
 import './localize-behavior.js';
 import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
@@ -46,7 +45,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-image-selector-tile">
 		</div>
 	</template>
 
-	
+
 </dom-module>`;
 
 document.head.appendChild($_documentContainer.content);
