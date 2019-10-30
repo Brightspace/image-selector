@@ -6,9 +6,9 @@ For further information on this and other D2L UI components, see the docs at [ui
 
 ## Installation
 
-`d2l-image-selector` can be installed from Bower:
+`d2l-image-selector` can be installed from npm:
 ```shell
-bower install git://github.com/Brightspace/image-selector.git#v1.0.0
+npm install git://github.com/Brightspace/image-selector.git
 ```
 ## Usage
 ```html
@@ -31,3 +31,6 @@ LAUNCHPAD_CHROME-'C:\Program Files (x86)\Google\Chrome\Application'
 ## Coding styles
 
 See the [Best Practices & Style Guide](https://github.com/Brightspace/valence-ui-docs/wiki/Best-Practices-&-Style-Guide) for information on naming conventions, plus information about the [EditorConfig](http://editorconfig.org) rules used in this repo.
+
+## Package-lock.json
+We don't want a package-lock file on non application repositories.
