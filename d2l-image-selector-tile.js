@@ -35,7 +35,7 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-image-selector-tile">
 				<button class="overlay-button" on-tap="_selectImage" on-focus="_toggleOverlayOn" on-blur="_toggleOverlayOff">
 					<div class="overlay-button-inner">
 						<d2l-icon class="camera-icon" icon="d2l-tier1:pic" aria-hidden="true"></d2l-icon>
-						<span class="overlay-button-text">{{localize('useThisImage')}}</span>
+						<span class="overlay-button-text">[[localize('useThisImage')]]</span>
 					</div>
 				</button>
 			</div>

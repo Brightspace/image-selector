@@ -77,28 +77,28 @@ $_documentContainer.innerHTML = `<dom-module id="d2l-basic-image-selector">
 			<d2l-search-widget id="image-search" search-action="[[_searchAction]]" placeholder-text="[[localize('search')]]" search-field-name="search">
 			</d2l-search-widget>
 
-			<template is="dom-if" if="{{_organizationChangeImageHref}}" restamp="true">
+			<template is="dom-if" if="[[_organizationChangeImageHref]]" restamp="true">
 				<div role="button" tabindex="0" class="upload" on-tap="_handleUpload" on-keydown="_handleUpload">
 					<d2l-icon class="upload-icon" icon="d2l-tier2:upload" aria-hidden="true"></d2l-icon>
-					<span class="upload-text">{{localize('upload')}}</span>
+					<span class="upload-text">[[localize('upload')]]</span>
 				</div>
 			</template>
 
 		</div>
 
-		<template is="dom-if" if="{{_showGrid}}">
+		<template is="dom-if" if="[[_showGrid]]">
 			<d2l-image-tile-grid id="image-grid" organization="[[organization]]" images="[[_images]]"></d2l-image-tile-grid>
 		</template>
 
-		<template is="dom-if" if="{{!_showGrid}}">
+		<template is="dom-if" if="[[!_showGrid]]">
 			<div class="no-results-area">
 				<div class="no-results-text">
-					<span>{{_noResultsTextStart}}</span><span class="no-results-search-text">{{_noResultsTextMid}}</span><span>{{_noResultsTextEnd}}</span>
+					<span>[[_noResultsTextStart]]</span><span class="no-results-search-text">[[_noResultsTextMid]]</span><span>[[_noResultsTextEnd]]</span>
 				</div>
-				{{localize('images.pleaseModify')}}
+				[[localize('images.pleaseModify')]]
 			</div>
 		</template>
-		<d2l-loading-spinner id="lazyLoadSpinner" class$="{{_loadingSpinnerClass}}" size="100">
+		<d2l-loading-spinner id="lazyLoadSpinner" class$="[[_loadingSpinnerClass]]" size="100">
 		</d2l-loading-spinner>
 	</template>
 
