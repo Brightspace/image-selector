@@ -109,10 +109,10 @@ Polymer({
 	is: 'd2l-basic-image-selector',
 	ready: function() {
 		this._images = this._defaultImages;
-	},
-	constructor: function() {
 		this._initialize = this._initialize.bind(this);
 		this._clear = this._clear.bind(this);
+		window.addEventListener('d2l-dialog-open', this._initialize);
+		window.addEventListener('d2l-dialog-close', this._clear);
 	},
 	properties: {
 		courseImageUploadCb: Function,
@@ -154,16 +154,6 @@ Polymer({
 			'd2l-search-widget-results-changed',
 			'_searchResultsChanged'
 		);
-	},
-	connectedCallback: function() {
-		//super.connectedCallback();
-		window.addEventListener('d2l-dialog-open', this._initialize);
-		window.addEventListener('d2l-dialog-close', this._clear);
-	},
-	disconnectedCallback: function() {
-		window.removeEventListener('d2l-dialog-open', this._initialize);
-		window.removeEventListener('d2l-dialog-close', this._clear);
-		//super.disconnectedCallback();
 	},
 	_searchImages: [],
 	_defaultImages: [],
