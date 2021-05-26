@@ -131,8 +131,8 @@ Polymer({
 	},
 	behaviors: [ D2L.PolymerBehaviors.ImageSelector.LocalizeBehavior ],
 	listeners: {
-		'd2l-simple-overlay-opening': '_initialize',
-		'd2l-simple-overlay-closed': '_clear'
+		'd2l-simple-overlay-opening': 'initializeSearch',
+		'd2l-simple-overlay-closed': 'clearSearch'
 	},
 	observers: [
 		'_onOrganizationChanged(organization)'
@@ -226,7 +226,7 @@ Polymer({
 			this.organization = SirenParse(organization);
 		}
 	},
-	_initialize: function() {
+	initializeSearch: function() {
 		this._searchAction = JSON.stringify(this._getSearchAction());
 		this._showGrid = true;
 		this.$$('d2l-search-widget').clear();
@@ -245,7 +245,7 @@ Polymer({
 				.then(this._onDefaultImagesRequestResponse.bind(this));
 		}
 	},
-	_clear: function() {
+	clearSearch: function() {
 		this._searchString = '';
 		this._images = [];
 		this._searchImages = [];

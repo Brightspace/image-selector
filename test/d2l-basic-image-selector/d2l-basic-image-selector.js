@@ -117,7 +117,7 @@ describe('<d2l-course-tile>', function() {
 		});
 	});
 
-	describe('_initialize', function() {
+	describe('initializeSearch', function() {
 		beforeEach(function() {
 			widget.imageCatalogLocation = 'http://test.com';
 			widget._getChangeCourseImageLink = sinon.stub();
@@ -135,22 +135,22 @@ describe('<d2l-course-tile>', function() {
 		});
 
 		it('clears the search widget', function() {
-			widget._initialize();
+			widget.initializeSearch();
 			expect(widget.$$('d2l-search-widget').clear.called).to.equal(true);
 		});
 
 		it('shows the grid', function() {
-			widget._initialize();
+			widget.initializeSearch();
 			expect(widget._showGrid).to.equal(true);
 		});
 
 		it("generates a request using the passed in organization's name", function() {
-			widget._initialize();
+			widget.initializeSearch();
 			expect(widget._getSearchStringValue.calledWith(widget.organization.properties.name)).to.equal(true);
 		});
 
 		it('generates a request even if no oraganization was passed in', function() {
-			widget._initialize();
+			widget.initializeSearch();
 			expect(widget._getSearchStringValue.called).to.equal(true);
 		});
 	});
@@ -230,7 +230,7 @@ describe('<d2l-course-tile>', function() {
 			widget._searchImages = [1];
 			widget._defaultImages = [1];
 
-			widget._clear();
+			widget.clearSearch();
 
 			expect(widget._searchImages).to.deep.equal([]);
 			expect(widget._showGrid).to.equal(true);
