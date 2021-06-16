@@ -293,7 +293,7 @@ Polymer({
 			return;
 		}
 
-		if (this._nextSearchResultPage) {
+		if (this._nextSearchResultPage && this._loadingSpinnerClass) {
 			this._loadingSpinnerClass = '';
 			this.$.lazyLoadSpinner.scrollIntoView();
 			return this._fetchSirenEntity(this._nextSearchResultPage)
